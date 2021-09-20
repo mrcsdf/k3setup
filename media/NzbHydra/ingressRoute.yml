@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nzbhydra2
+  namespace: media
+  labels:
+    name: nzbhydra2
+spec:
+  entryPoints: 
+    - web
+    - websecure
+  routes:
+    - match: Host(\`hydra.smrtrock.com\`)
+      kind: Rule
+      services:
+        - name: nzbhydra2

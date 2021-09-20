@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nzbget
+  namespace: media
+  labels:
+    name: nzbget
+spec:
+  entryPoints: 
+    - web
+    - websecure
+  routes:
+    - match: Host(\`get.smrtrock.com\`)
+      kind: Rule
+      services:
+        - name: nzbget

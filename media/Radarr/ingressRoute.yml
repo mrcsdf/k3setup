@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: radarr
+  namespace: media
+  labels:
+    name: radarr
+spec:
+  entryPoints: 
+    - web
+    - websecure
+  routes:
+    - match: Host(\`movies.smrtrock.com\`)
+      kind: Rule
+      services:
+        - name: radarr

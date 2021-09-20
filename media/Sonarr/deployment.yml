@@ -1,0 +1,45 @@
+# sonarr
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+   name: sonarr
+   namespace: media
+   labels:
+     app: sonarr
+ spec:
+   replicas: 1
+   selector:
+      matchLabels:
+        app: sonarr
+   template:
+     metadata:
+       labels:
+         app: sonarr
+         name: sonarr
+     spec:
+      containers:
+         - name: sonarr
+           image: linuxserver/sonarr:arm32v7-latest
+           resources:
+             limits:
+               memory: "128Mi"
+               cpu: "500m"
+           ports:
+             - containerPort: 8989
+           env:
+            - name: PUID
+              value: "1000"
+            - name: GUID
+              value: "1000"
+           volumeMounts:
+             - mountPath: /config
+               name: sonarr-config
+             - mountPath: /tv
+               name: sonarr-tv
+      volumes:
+        - name: sonarr-config
+          hostPath:
+            path: /media/config/sonarr
+        - name: sonarr-tv
+          hostPath:
+            path: /media/media/tv

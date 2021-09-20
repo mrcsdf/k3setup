@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jackett
+  namespace: media
+  labels:
+    name: jackett
+spec:
+  entryPoints: 
+    - web
+    - websecure
+  routes:
+    - match: Host(\`jackett.smrtrock.com\`)
+      kind: Rule
+      services:
+        - name: jackett

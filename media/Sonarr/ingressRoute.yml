@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+name: sonarr
+namespace: media
+labels:
+  name: sonarr
+spec:
+entryPoints: 
+  - web
+  - websecure
+routes:
+  - match: Host(\`tv.smrtrock.com\`)
+    kind: Rule
+    services:
+      - name: sonarr

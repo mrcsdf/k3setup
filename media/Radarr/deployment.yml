@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: radarr
+   namespace: media
+   labels:
+     app: radarr
+spec:
+   replicas: 1
+   selector:
+      matchLabels:
+        app: radarr
+   template:
+     metadata:
+       labels:
+         app: radarr
+         name: radarr
+     spec:
+      containers:
+         - name: radarr
+           image: linuxserver/radarr:arm64v8-latest
+           resources:
+             limits:
+               memory: "128Mi"
+               cpu: "500m"
+           ports:
+             - containerPort: 7878
+           env:
+            - name: PUID
+              value: "1000"
+            - name: GUID
+              value: "1000"
+           volumeMounts:
+             - mountPath: /config
+               name: radarr-config
+             - mountPath: /movies
+               name: movies
+      volumes:
+        - name: radarr-config
+          hostPath:
+            path: /media/config/radarr
+        - name: movies
+          hostPath:
+            path: /media/media/movies

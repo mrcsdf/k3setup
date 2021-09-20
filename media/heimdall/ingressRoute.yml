@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: heimdall-ingrt
+  namespace: media
+  labels:
+    name: heimdall-ingrt
+spec:
+  entryPoints: 
+    - web
+    - websecure
+  routes:
+    - match: Host(\`smrtrock.com\`)
+      kind: Rule
+      services:
+        - name: heimdall-svc

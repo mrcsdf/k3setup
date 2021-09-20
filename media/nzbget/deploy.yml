@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nzbget
+  namespace: media
+spec:
+  selector:
+    matchLabels:
+      app: nzbget
+  template:
+    metadata:
+      labels:
+        app: nzbget
+    spec:
+      containers:
+      - name: nzbget
+        image: linuxserver/nzbget:arm64v8-latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 6789
+        env:
+            - name: PUID
+              value: "1000"
+            - name: GUID
+              value: "1000"
+        volumeMounts:
+          - mountPath: /config
+            name: nzbget-config
+          - mountPath: /downloads
+            name: downloads
+          - mountPath: /tv
+            name: sonarr-tv
+          - mountPath: /movies
+            name: movies
+      volumes:
+        - name: nzbget-config
+          hostPath:
+            path: /media/config/nzbget
+        - name: sonarr-tv
+          hostPath:
+            path: /media/media/tv
+        - name: downloads
+          hostPath:
+            path: /media/downloads/nzb
+        - name: movies
+          hostPath:
+            path: /media/media/movies
