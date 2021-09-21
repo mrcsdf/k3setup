@@ -21,13 +21,7 @@ helm repo update
 helm search repo cert-manager
 
 # Install cert-manager
-helm upgrade --install cert-manager \
-    --namespace cert-manager \
-    --set nodeSelector.node-type=master \
-    --set webhook.nodeSelector.node-type=master \
-    --set cainjector.nodeSelector.node-type=master \
-    jetstack/cert-manager \
-    --set installCRDs=true
+helm upgrade --install cert-manager --namespace cert-manager --set nodeSelector.node-type=master --set webhook.nodeSelector.node-type=master --set cainjector.nodeSelector.node-type=master  jetstack/cert-manager --set installCRDs=true
 
 # Verify 
 # Make sure all cert-manager deployed pods are running
@@ -81,7 +75,7 @@ spec:
     kind: ClusterIssuer
 EOF
 ### check cert 
-kubectl describe certificate traefik-cert --namespace traefik
+kubectl describe certificate traefik-cert --namespace traefik-
 
 # Optional when needed delete certs
 # Delete certificate
