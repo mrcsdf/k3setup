@@ -1,4 +1,5 @@
 ---
+k3s_version: v1.21.5+k3s1
 ansible_user: smrtrock
 time_zone: America/New_York
 systemd_dir: /etc/systemd/system
