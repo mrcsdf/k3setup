@@ -14,3 +14,4 @@ spec:
       kind: Rule
       services:
         - name: heimdall-svc
+          port: 80

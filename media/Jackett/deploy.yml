@@ -19,8 +19,18 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+        env:
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          - name: TZ
+            value: America/New_York
         ports:
-        - containerPort: 9117
+        - name: http
+          hostPort: 9117
+          protocol: TCP
+          containerPort: 9117
         volumeMounts:
           - mountPath: /config
             name: jackett-config

@@ -7,5 +7,6 @@ spec:
   selector:
     app: jackett
   ports:
-  - port: 9117
+  - name: default
+    port: 80
     targetPort: 9117
