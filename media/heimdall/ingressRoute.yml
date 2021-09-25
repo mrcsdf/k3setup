@@ -5,13 +5,16 @@ metadata:
   namespace: media
   labels:
     name: heimdall-ingrt
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router..tls: "false"
 spec:
   entryPoints: 
     - web
     - websecure
   routes:
-    - match: Host(\`smrtrock.com\`)
+    - match: Host(`smrtrock.com`) && PathPrefix(`/home`)
       kind: Rule
       services:
         - name: heimdall-svc
-          port: 80
+          port: web

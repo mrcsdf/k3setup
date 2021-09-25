@@ -2,7 +2,7 @@ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scr
 chmod 700 get_helm.sh
 ./get_helm.sh
 
-helm repo add traefik https://containous.github.io/traefik-helm-chart
+helm repo add traefik https://helm.traefik.io/traefik
 
 helm repo update
 # create namespace

@@ -26,13 +26,6 @@ spec:
             value: "1000"
           - name: TZ
             value: America/New_York
-        ports:
-        - name: web
-          containerPort: 80
-          hostPort: 80
-        - name: websecure
-          containerPort: 443
-          hostPort: 9117
         volumeMounts:
           - mountPath: /config
             name: heimdall-config
