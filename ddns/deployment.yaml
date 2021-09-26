@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflare-ddns
+  labels:
+    app: cloudflare-ddns
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: cloudflare-ddns
+  template:
+    metadata:
+      name: cloudflare-ddns
+      labels:
+        app: cloudflare-ddns
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: cloudflare-ddns
+          image: favonia/cloudflare-ddns:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 1000
+            runAsGroup: 1000
+          env:
+            - name: "IP6_POLICY"
+              value: "unmanaged"
+            - name: "PROXIED"
+              value: "true"
+            - name: "CF_API_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare
+                  key: dns-token
+            - name: "DOMAINS"
+              value: "smrtrock.com,smrtrock.blog"
+# reference: https://awesomeopensource.com/project/favonia/cloudflare-ddns
