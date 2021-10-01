@@ -20,7 +20,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: cloudflare-ddns
-          image: favonia/cloudflare-ddns:latest
+          image: oznu/cloudflare-ddns:armhf
           resources:
             limits:
               memory: "128Mi"
