@@ -1,0 +1,8 @@
+- name: download k3s convenience script
+  get_url:
+    url: https://get.k3s.io
+    dest: /usr/local/bin/get-k3s.sh
+    mode: 'u+x,g+x'
+
+- name: install k3s with convenience script 
+  command:  "/usr/local/bin/get-k3s.sh {{ extra_agent_args }}"

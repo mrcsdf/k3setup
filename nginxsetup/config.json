@@ -1,0 +1,21 @@
+{
+    "database": {
+      "engine": "mysql",
+      "host": "db",
+      "name": "mysql",
+      "user": "myadmin",
+      "password": "LKFern13!@#",
+      "port": 3306
+  }
+  
+  events {}
+  stream {
+    upstream k3s_servers {
+      server 192.168.86.39:6443;
+      server 192.168.86.37:6443;
+    }
+    server {
+      listen 6443;
+      proxy_pass k3s_servers;
+    }
+  }

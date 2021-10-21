@@ -1,0 +1,13 @@
+- name: download docker convenience script
+  get_url:
+    url: https://get.docker.com
+    dest: /usr/local/bin/get-docker.sh
+    mode: 'u+x,g+x'
+
+- name: install docker compose
+  apt:
+    name: docker-compose
+    state: latest
+    update_cache: true
+- name: install docker with convenience script
+  command: sh /usr/local/bin/get-docker.sh

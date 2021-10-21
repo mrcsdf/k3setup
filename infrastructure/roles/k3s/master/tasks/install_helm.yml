@@ -1,0 +1,10 @@
+
+- name: Download helm convenience script
+  get_url:
+    url: https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+    dest: /usr/local/bin/get-helm.sh
+    mode: 'u+x,g+x'
+
+- name: install docker with convenience script
+  command: /usr/local/bin/get-helm.sh
+

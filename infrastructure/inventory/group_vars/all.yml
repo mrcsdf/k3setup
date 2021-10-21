@@ -1,8 +1,13 @@
 ---
-k3s_version: v1.21.5+k3s1
-ansible_user: smrtrock
-time_zone: America/New_York
+k3s_version: v1.22.2+k3s2
+ansible_user: ubuntu
+user: smrtrock
+ansible_become: yes
+ansible_become_method: sudo
+ansible_become_pass: "{{ remote_user_passwd }}"
+user_hashed_passwd: "{{ remote_user_hashed_pw }}"
+ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 systemd_dir: /etc/systemd/system
 master_ip: "{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
-extra_server_args: ""
-extra_agent_args: ""
+extra_server_args: "server --write-kubeconfig-mode 644 --node-taint CriticalAddonsOnly=true:NoExecute --tls-san 192.168.86.39 --no-deploy traefik --no-deploy kubernetes-dashboard"
+extra_agent_args: "agent --server https://{{master_ip }}:6443 --token {{ hostvars[groups['master'][0]]['token'] }}"

@@ -1,0 +1,69 @@
+---
+
+- name: Umount k3s filesystems
+  include_tasks: umount_with_children.yml
+  with_items:
+    - /run/k3s
+    - /var/lib/kubelet
+    - /run/netns
+    - /var/lib/rancher/k3s
+  loop_control:
+    loop_var: mounted_fs
+
+- name: Remove service files, binaries and data
+  file:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - /usr/local/bin/k3s
+    - "{{ systemd_dir }}/k3s.service"
+    - "{{ systemd_dir }}/k3s-node.service"
+    - /etc/rancher/k3s
+    - /var/lib/kubelet
+    - /var/lib/rancher/k3s
+    - /var/lib/docker
+    - /etc/docker
+    - /etc/apparmor.d/docker
+    - /var/run/docker.sock
+
+- name: daemon_reload
+  systemd:
+    daemon_reload: yes
+
+- name: uninstall docker-engine
+  apt:
+    name: docker-ce
+    state: absent
+    purge: True
+    autoremove: yes
+- name: uninstall docker.io
+  apt:
+    name: docker.io
+    state: absent
+    purge: True
+    autoremove: yes
+- name: uninstall docker-ce
+  apt:
+    name: docker-ce
+    state: absent
+    purge: True
+    autoremove: yes
+- name: uninstall docker-ce-cli
+  apt:
+    name: docker-ce-cli
+    state: absent
+    purge: True
+    autoremove: yes
+
+
+- name: Remove service files, binaries and data
+  file:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - /usr/local/bin/k3s
+    - "{{ systemd_dir }}/k3s.service"
+    - "{{ systemd_dir }}/k3s-node.service"
+    - /etc/rancher/k3s
+    - /var/lib/kubelet
+    - /var/lib/rancher/k3s

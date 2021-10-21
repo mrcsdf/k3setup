@@ -1,0 +1,8 @@
+- name: check if uninstall script reboot_required.stat.exists
+  stat:
+    path: /usr/local/bin/k3s-uninstall.sh
+  register: uninstall
+
+- name: uninstall k3s
+  command: sh /usr/local/bin/k3s-uninstall.sh
+  when: uninstall.stat.exists == True

@@ -37,6 +37,7 @@ additionalArguments:
 - "--entryPoints.web.address=:8000/tcp"
 - "--entryPoints.websecure.address=:8443/tcp"
 - "--log.format=json"
+- "--log.level=Debug"
 - "--api.dashboard=true"
 - "--api.insecure=true"
 - "--ping=true"

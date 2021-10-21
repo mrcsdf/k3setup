@@ -1,0 +1,24 @@
+- name: uninstall docker-engine
+  apt:
+    name: docker-ce
+    state: absent
+    purge: True
+    autoremove: yes
+- name: uninstall docker.io
+  apt:
+    name: docker.io
+    state: absent
+    purge: True
+    autoremove: yes
+- name: uninstall docker-ce
+  apt:
+    name: docker-ce
+    state: absent
+    purge: True
+    autoremove: yes
+- name: uninstall docker-ce-cli
+  apt:
+    name: docker-ce-cli
+    state: absent
+    purge: True
+    autoremove: yes

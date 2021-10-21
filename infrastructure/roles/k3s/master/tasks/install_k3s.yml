@@ -1,0 +1,11 @@
+- name: download k3s convenience script
+  get_url:
+    url: https://get.k3s.io
+    dest: /usr/local/bin/get-k3s.sh
+    mode: 'u+x,g+x'
+
+- name: install k3s with convenience script 
+  command:  "/usr/local/bin/get-k3s.sh {{ extra_server_args }}"
+
+- name: Install helm
+  include_tasks: install_helm.yml

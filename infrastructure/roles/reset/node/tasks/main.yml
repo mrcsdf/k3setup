@@ -1,8 +1,7 @@
----
-- name: uninstall nodes
-  ansible.builtin.shell: /usr/local/bin/k3s-agent-uninstall.sh
-  hosts: node
-
-- name: uninstall master
-  ansible.builtin.shell: /usr/local/bin/k3s-uninstall.sh 
-  hosts: master
+- name: check if uninstall script exists
+  stat:
+    path: /usr/local/bin/k3s-agent-uninstall.sh
+  register: uninstall 
+- name: uninstall k3s
+  command: sh /usr/local/bin/k3s-agent-uninstall.sh
+  when: uninstall.stat.exists == True

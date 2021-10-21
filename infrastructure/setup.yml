@@ -1,0 +1,33 @@
+- hosts: k3s_cluster
+  gather_facts: yes
+  become: yes
+  vars:
+    ssh_port: "22"
+    k3s_port: "6443"
+    my_client_ip: 192.168.86.26
+    tmzone: America/New_York
+    sudo_timeout: 20
+    f2b_jail_local: |
+      [DEFAULT]
+      ignoreip = 127.0.0.1/8 ::1 {{ my_client_ip }}
+
+      [sshd]
+      enabled = true
+      port = {{ ssh_port }}
+      maxretry = 3
+      findtime = 15m
+      bantime = 1h
+      
+  roles:
+    - role: prereqs
+    - role: pi
+
+- hosts: master
+  become: yes
+  roles:
+    - role: k3s/master
+
+- hosts: node
+  become: yes
+  roles:
+    - role: k3s/node
