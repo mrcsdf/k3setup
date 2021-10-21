@@ -8,6 +8,6 @@ ansible_become_pass: "{{ remote_user_passwd }}"
 user_hashed_passwd: "{{ remote_user_hashed_pw }}"
 ssh_pub_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 systemd_dir: /etc/systemd/system
-master_ip: "{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
+master_ip: "{{ hostvars[groups['master'][0]]['ansible_eth0']['ipv4']['address'] | default(groups['master'][0]) }}"
 extra_server_args: "server --write-kubeconfig-mode 644 --node-taint CriticalAddonsOnly=true:NoExecute --tls-san 192.168.86.39 --no-deploy traefik --no-deploy kubernetes-dashboard"
-extra_agent_args: "agent --server https://{{master_ip }}:6443 --token {{ hostvars[groups['master'][0]]['token'] }}"
+extra_agent_args: "agent --server https://{{ master_ip }}:6443 --token {{ hostvars[groups['master'][0]]['token'] }}"
